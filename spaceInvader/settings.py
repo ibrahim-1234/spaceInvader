@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'spaceInvader.wsgi.application'
 DATABASES = {
         'default': {  
         'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'vai9e9qm0mbs434e',  
-        'USER': 'snl2cog4c2k8qefo',  
-        'PASSWORD': 'illjicjtnqa07wuh',  
-        'HOST': 'iu51mf0q32fkhfpl.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',  
+        'NAME': 'vxwg6ka0rgw2unbl',  
+        'USER': 'wewxbxmpaji1y1pf',  
+        'PASSWORD': 'm9zv48chodplt3ec',  
+        'HOST': 'q57yawiwmnaw13d2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',  
         'PORT': '3306',  
         'OPTIONS': {  
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
