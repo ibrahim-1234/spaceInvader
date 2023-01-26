@@ -133,4 +133,5 @@ ALLOWED_HOSTS = [
     '192.168.100.122',
     '127.0.0.1',
     'www.smartspaceinvaders.com',
+    'smartspaceinvaders.com',
 ]
