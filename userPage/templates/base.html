@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space invader</title>
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="{% url 'home' %}">Home</a>
+        {% if auth %}
+            <a href="{% url 'users' username %}">{{ username }}</a>
+            <a href="{% url 'logout' %}">logout</a>
+        {% else %}
+            <a href="{% url 'login' %}">login</a>
+            <a href="{% url 'register' %}">register</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+            {% block content %}
+            {% endblock %}
+</div>
+
+<footer style="text-align: center; font-family: Arial, Helvetica, sans-serif;">Copyright © 2023 KSU All rights reserved</footer>
+
+<script>
+if (window.performance &&
+    window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
+    window.location.reload()
+}
+</script>
+    
+</body>
+</html>

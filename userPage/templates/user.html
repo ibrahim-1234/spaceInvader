@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>user page</h1>
+    email:  {{user.email}}
+    <br>
+    username:   {{user.username}}
+    <br>
+    wins:   {{user.win}}
+    <br>
+    losses: {{user.loss}}
+    <br>
+    total score:    {{user.total_score}}
+
+{% endblock %}    
+

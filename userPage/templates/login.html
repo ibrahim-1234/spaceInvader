@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>login</h1>
+    <form method="POST" class="form-info">
+        {% csrf_token %}
+        {{ login_form }}
+        <button type="submit" class="submit-form">Login</button>
+    </form>
+    <span style="color: red; margin-top: 10px;">{{error}}</span>
+    <br>
+    <p class="text-center">Don't have an account? <a href="{% url 'register' %}">Create an account</a>.</p>
+
+{% endblock %}

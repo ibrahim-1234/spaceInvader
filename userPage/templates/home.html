@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+    <img src="{% static 'smart-invaders.png' %}" alt="not found" style="margin-top: 10px; width: 150px; border-radius: 12px;">
+    <a href="{% url 'download' %}" download class="down-game">download</a>
+    <h3>Leader Board</h3>
+    <table class="board">
+        
+        <tr class="item">
+            <th>name</th>
+            <th><a href="{% url 'orders' '-win' %}">wins</a></th>
+            <th><a href="{% url 'orders' '-loss' %}">losses</a></th>
+            <th><a href="{% url 'orders' '-total_score' %}">score</a></th>
+        </tr>
+    {% for i in data %}
+
+        <tr class="item">
+                <td>{{ i.username }}</td>
+                <td>{{ i.win }}</td>
+                <td>{{ i.loss }}</td>
+                <td>{{ i.total_score }}</td>
+        </tr>
+
+    {% endfor %}
+    </table>
+
+{% endblock %}
