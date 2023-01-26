@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%zpmqrq=coo1(k6z*xj3%@!sk=9(xhye&3efw*v0+dmk2gbvc9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '192.168.100.122',
@@ -78,20 +78,11 @@ WSGI_APPLICATION = 'spaceInvader.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
+import dj_database_url
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME':'user',
-        'USER': 'root',
-        'PASSWORD':'aaaa',
-        'HOST':'127.0.0.1',
-        'PORT': '3306',
-        'OPTIONS': {  
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
-        },  
+    'default': dj_database_url.config(),  
     }
-}
+
 
 
 # Password validation
