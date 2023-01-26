@@ -95,7 +95,7 @@ def download_file(req):
     filename = 'Space-invader.zip'
     filepath = BASE_DIR + '\\userPage\\files\\' + filename
     path = open(filepath, 'rb')
-    mime_type, _ = mimetypes.guess_type(filepath)
-    response = HttpResponse(path, content_type=mime_type)
+    # mime_type, _ = mimetypes.guess_type(filepath)
+    response = HttpResponse(path, content_type='application/zip')
     response['Content-Disposition'] = "attachment; filename=%s" % filename
     return response
