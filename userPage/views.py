@@ -4,7 +4,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from .models import userInfo
 from .forms import loginForm, registerForm
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from django.core.cache import cache
 
 
@@ -96,6 +96,6 @@ def download_file(req):
     filepath = BASE_DIR + '\\userPage\\static\\' + filename
     path = open(filepath, 'rb')
     mime_type, _ = mimetypes.guess_type(filepath)
-    response = HttpResponse(path, content_type=mime_type)
+    response = FileResponse(path, content_type=mime_type)
     response['Content-Disposition'] = "attachment; filename=%s" % filename
     return response
