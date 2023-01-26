@@ -80,7 +80,17 @@ WSGI_APPLICATION = 'spaceInvader.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 import dj_database_url
 DATABASES = {
-    'default': dj_database_url.config(),  
+        'default': {  
+        'ENGINE': 'django.db.backends.mysql',  
+        'NAME': 'vai9e9qm0mbs434e',  
+        'USER': 'snl2cog4c2k8qefo',  
+        'PASSWORD': 'illjicjtnqa07wuh',  
+        'HOST': 'iu51mf0q32fkhfpl.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',  
+        'PORT': '3306',  
+        'OPTIONS': {  
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
+        }  
+    } 
     }
 
 
