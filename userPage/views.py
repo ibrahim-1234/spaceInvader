@@ -93,9 +93,9 @@ def log_out(req):
 def download_file(req):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     filename = 'Space-invader.zip'
-    filepath = BASE_DIR + '\\userPage\\files\\' + filename
+    filepath = BASE_DIR + '\\userPage\\static\\' + filename
     path = open(filepath, 'rb')
-    # mime_type, _ = mimetypes.guess_type(filepath)
-    response = HttpResponse(path, content_type='application/zip')
+    mime_type, _ = mimetypes.guess_type(filepath)
+    response = HttpResponse(path, content_type=mime_type)
     response['Content-Disposition'] = "attachment; filename=%s" % filename
     return response
