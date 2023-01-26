@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-%zpmqrq=coo1(k6z*xj3%@!sk=9(xhye&3efw*v0+dmk2gbvc9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '192.168.100.122',
+    '127.0.0.1',
+    'www.smartspaceinvaders.com',
+    'smartspaceinvaders.com',
+]
 
 
 # Application definition
@@ -129,9 +134,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-ALLOWED_HOSTS = [
-    '192.168.100.122',
-    '127.0.0.1',
-    'www.smartspaceinvaders.com',
-    'smartspaceinvaders.com',
-]
+
