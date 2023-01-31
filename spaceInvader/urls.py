@@ -25,5 +25,5 @@ urlpatterns = [
     path('login/', userPage.views.login_page,name='login'),
     path('logout', userPage.views.log_out, name='logout'),
     path('users/<name>', userPage.views.user_page, name='users'),
-    path('download/', userPage.views.download_file, name='download'),
+    # path('download/', userPage.views.download_file, name='download'),
 ]
