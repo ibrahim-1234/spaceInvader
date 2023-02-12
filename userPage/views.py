@@ -39,17 +39,21 @@ def verify(req):
 def send_reset_pass(req):
     if req.method == 'POST':
         form = send_reset_Form(req.POST)
-        if form.is_valid() and userInfo.objects.get(email=form.cleaned_data['email']) != None:
-            token = uuid.uuid4().hex
-            sub = 'smart space invaders reset password'
-            mess = f'click the link to reset your password http://127.0.0.1:8000/reset/password?token={token}'
-            to = [form.cleaned_data['email']]
-            send_mail(sub, mess, 'brhoome74@gmail.com', to)
-            req.session['token'] = token
-            req.session['email'] = form.cleaned_data['email']
-            return HttpResponse('<h1>check your email inbox to reset your password</h1>')
-        else:
-            return render(req, 'pass_reset.html', {'send_reset_form':form,'error':'email is invalid'})    
+        try:
+            if form.is_valid() and userInfo.objects.get(email=form.cleaned_data['email']) != None:
+                token = uuid.uuid4().hex
+                sub = 'smart space invaders reset password'
+                mess = f'click the link to reset your password https://smartspaceinvaders.com/reset/password?token={token}'
+                to = [form.cleaned_data['email']]
+                send_mail(sub, mess, 'brhoome74@gmail.com', to)
+                req.session['token'] = token
+                req.session['email'] = form.cleaned_data['email']
+                return render(req, 'success.html', {'password_reset':True})
+            else:
+                return render(req, 'pass_reset.html', {'send_reset_form':form,'error':'email is invalid'})
+
+        except userInfo.DoesNotExist:
+            return render(req, 'pass_reset.html', {'send_reset_form':form,'error':'email does not exist'})
     else:    
         form = send_reset_Form()
     return render(req, 'pass_reset.html',{'send_reset_form':form})
@@ -92,11 +96,11 @@ def register_page(req):
                 
 
                 sub = 'smart space invaders verification'
-                mess = f'click the link to verify your email http://127.0.0.1:8000/verify?token={token}'
+                mess = f'click the link to verify your email https://smartspaceinvaders.com/verify?token={token}'
                 to = [form.cleaned_data['email']]
                 send_mail(sub, mess, 'brhoome74@gmail.com', to)
 
-                return HttpResponse('<h1>please check your email inbox to verify your email</h1>')
+                return render(req, 'success.html', {'verfiy':True})
             else:
                 return render(req, 'register.html', {'register_form':form, 'auth': req.session['authin'], 'username':req.session['username'], 'error':'password and confirmed password not equal'})    
         else:       
