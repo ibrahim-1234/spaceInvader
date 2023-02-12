@@ -43,7 +43,7 @@ def send_reset_pass(req):
             if form.is_valid() and userInfo.objects.get(email=form.cleaned_data['email']) != None:
                 token = uuid.uuid4().hex
                 sub = 'smart space invaders reset password'
-                mess = f'click the link to reset your password https://smartspaceinvaders.com/reset/password?token={token}'
+                mess = f'click the link to reset your password https://www.smartspaceinvaders.com/reset/password?token={token}'
                 to = [form.cleaned_data['email']]
                 send_mail(sub, mess, 'brhoome74@gmail.com', to)
                 req.session['token'] = token
@@ -68,7 +68,7 @@ def reset_pass(req):
                 user.save()
                 del req.session['token']
                 del req.session['email']
-                return HttpResponse('<h1>password changed!</h1>')
+                return render(req, 'success.html', {'changed':True})
             else:
                 return render(req, 'password_reset.html', {'change_pass_form':form, 'error':'password is invalid'})
             
@@ -96,11 +96,11 @@ def register_page(req):
                 
 
                 sub = 'smart space invaders verification'
-                mess = f'click the link to verify your email https://smartspaceinvaders.com/verify?token={token}'
+                mess = f'click the link to verify your email https://www.smartspaceinvaders.com/verify?token={token}'
                 to = [form.cleaned_data['email']]
                 send_mail(sub, mess, 'brhoome74@gmail.com', to)
 
-                return render(req, 'success.html', {'verfiy':True})
+                return render(req, 'success.html', {'verify':True})
             else:
                 return render(req, 'register.html', {'register_form':form, 'auth': req.session['authin'], 'username':req.session['username'], 'error':'password and confirmed password not equal'})    
         else:       
