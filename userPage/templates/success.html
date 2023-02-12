@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if password_reset %}
+    <h1>check your email inbox to reset your password</h1>
+
+{% elif verify %}
+    <h1>please check your email inbox to verify your email.</h1>    
+
+{% endif %}    
+
+{% endblock %} 

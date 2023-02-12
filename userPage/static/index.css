@@ -1,3 +1,7 @@
+:root{
+    --shadows:rgb(242, 250, 245);
+}
+
 @font-face {
     font-family: 'spaceF';
     src: url("./Space-Invaders.woff") format("woff");
@@ -9,6 +13,9 @@
 
 
 body{
+    background-image: url('./background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
     margin: 0;
     min-height: 100vh;
     display: flex;
@@ -18,19 +25,20 @@ body{
 .nav-bar{
     display: flex;
     align-items: center;
-    background-color: rgba(0, 150, 0, 0.5);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    justify-content: space-between;
+    background-color: rgb(9, 128, 255);
+    box-shadow: 0 0 10px var(--shadows);
 }
 
 .nav-bar a{
     text-decoration: none;
-    color: black;
+    color: rgb(255, 255, 255);
     font-size: 20px;
     padding: 20px;
 }
 .nav-bar a:hover{
-    background-color: rgba(0, 150, 0, 0.8);
-    text-shadow: 0 0 10px white;
+    background-color: rgb(0, 110, 228);
+    text-shadow: 0 0 10px var(--shadows);
     padding-bottom: 17px;
     border-bottom: 3px solid black;
 }
@@ -40,8 +48,8 @@ body{
     padding: 10px;
     margin-top: 10px;
     border-radius: 8px;
-    background-color: rgba(0, 150, 0, 0.5);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: rgb(9, 128, 255);
+    box-shadow: 0 0 10px var(--shadows);
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
@@ -49,8 +57,7 @@ body{
 }
 
 .down-game:hover{
-    background-color: rgba(0, 150, 0, 0.8);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 15px var(--shadows);
 }
 
 .container{
@@ -65,32 +72,67 @@ body{
     margin-bottom: 8px;
 }
 
+.container *:not(input){
+    color: rgb(212, 212, 212);
+}
+
+.container a{
+    color: rgb(0, 255, 98);
+}
+
 .form-info{
     display: flex;
     flex-direction: column;
     border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     padding: 10px;
     min-width: 50%;
+    gap: 5px;
 }
+
+form input{
+    color: black;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    padding: 6px;
+}
+
+form input:focus{
+    box-shadow: 0 0 10px var(--shadows);
+}
+
 .submit-form{
-    border-radius: 8px;
+    border-radius: 6px;
+    border: none;
     width: fit-content;
-    padding: 4px;
+    padding: 8px;
     margin: auto;
     cursor: pointer;
     margin-top: 5px;
+    background-color: rgb(9, 128, 255);
+}
+
+.submit-form:hover{
+    box-shadow: 0 0 10px var(--shadows);
 }
 
 table{
     border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    padding: 5px;
+    box-shadow: 0 0 10px var(--shadows);
     text-align: center;
-    border-spacing: 20px;
     overflow-x: scroll;
-    margin-left: 5px;
-    margin-right: 5px;
+    background-color: rgb(9, 128, 255);
+    width: 100%;
+}
+
+table, th, td {
+    border-bottom: 2px solid;
+    padding: 15px;
+    border-spacing: 0;
+  }
+
+.userinfo span{
+    color: var(--shadows);
 }
 
 @media (max-width: 500px) {
@@ -108,7 +150,7 @@ table{
 }
 
 footer{
-    background-color: rgba(0, 150, 0, 0.5);
+    background-color: rgb(9, 128, 255);
     padding: 5px;   
     margin-top: auto; 
 }

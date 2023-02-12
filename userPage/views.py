@@ -1,13 +1,10 @@
-import mimetypes
-import os
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
-from .models import userInfo
-from .forms import loginForm, registerForm
-from django.http import HttpResponse, FileResponse
+from .models import userInfo, profile
+from .forms import loginForm, registerForm, send_reset_Form, change_pass_Form
 from django.core.cache import cache
-
-
+import uuid
+from django.core.mail import send_mail
 
 
 def home_page(req):
@@ -26,6 +23,56 @@ def order_list(req, order='-total_score'):
     cache.set('data', data)
     return redirect('/')         
 
+def verify(req):
+    if req.method == 'GET' and 'token' in req.GET:
+        user = profile.objects.get(token=str(req.GET.get('token')))
+        if user:
+            name = user.username
+            req.session['authin'] = True
+            req.session['username'] = user.username
+            userInfo.objects.create(username=user.username, email=user.email, password=user.password)
+            user.delete()
+            return redirect('users', name=name)
+
+    return redirect('home')
+
+def send_reset_pass(req):
+    if req.method == 'POST':
+        form = send_reset_Form(req.POST)
+        if form.is_valid() and userInfo.objects.get(email=form.cleaned_data['email']) != None:
+            token = uuid.uuid4().hex
+            sub = 'smart space invaders reset password'
+            mess = f'click the link to reset your password http://127.0.0.1:8000/reset/password?token={token}'
+            to = [form.cleaned_data['email']]
+            send_mail(sub, mess, 'brhoome74@gmail.com', to)
+            req.session['token'] = token
+            req.session['email'] = form.cleaned_data['email']
+            return HttpResponse('<h1>check your email inbox to reset your password</h1>')
+        else:
+            return render(req, 'pass_reset.html', {'send_reset_form':form,'error':'email is invalid'})    
+    else:    
+        form = send_reset_Form()
+    return render(req, 'pass_reset.html',{'send_reset_form':form})
+
+def reset_pass(req):
+    if 'token' in req.session and req.session['token'] == req.GET.get('token'):
+        if req.method == 'POST':
+            form = change_pass_Form(req.POST)
+            if form.is_valid() and form.cleaned_data['password1'] == form.cleaned_data['password2']:
+                user = userInfo.objects.get(email=req.session['email'])
+                user.password = form.cleaned_data['password1']
+                user.save()
+                del req.session['token']
+                del req.session['email']
+                return HttpResponse('<h1>password changed!</h1>')
+            else:
+                return render(req, 'password_reset.html', {'change_pass_form':form, 'error':'password is invalid'})
+            
+        else:    
+            form = change_pass_Form()
+        return render(req, 'password_reset.html', {'change_pass_form':form})
+    return redirect('home')    
+
 def register_page(req):
     if 'authin' not in req.session:
         req.session['authin'] = False
@@ -40,14 +87,20 @@ def register_page(req):
         form = registerForm(req.POST)
         if form.is_valid():
             if form.cleaned_data['password'] == form .cleaned_data['password_confirm']:
-                form.save()
-                req.session['authin'] = True
-                req.session['username'] = form.cleaned_data['username']
-                return redirect('users', name=form.cleaned_data['username'])
+                token = uuid.uuid4().hex
+                profile.objects.create(token=token, username=form.cleaned_data['username'], email=form.cleaned_data['email'], password=form.cleaned_data['password'])
+                
+
+                sub = 'smart space invaders verification'
+                mess = f'click the link to verify your email http://127.0.0.1:8000/verify?token={token}'
+                to = [form.cleaned_data['email']]
+                send_mail(sub, mess, 'brhoome74@gmail.com', to)
+
+                return HttpResponse('<h1>please check your email inbox to verify your email</h1>')
             else:
                 return render(req, 'register.html', {'register_form':form, 'auth': req.session['authin'], 'username':req.session['username'], 'error':'password and confirmed password not equal'})    
         else:       
-                return render(req, 'register.html', {'register_form':form, 'auth': req.session['authin'], 'username':req.session['username']})    
+            return render(req, 'register.html', {'register_form':form, 'auth': req.session['authin'], 'username':req.session['username']})    
         
     return render(req, 'register.html', {'register_form':form, 'auth': req.session['authin'], 'username':req.session['username']})    
 
@@ -75,9 +128,7 @@ def login_page(req):
                     
     return render(req, 'login.html', {'login_form':form, 'auth': req.session['authin'], 'username':req.session['username']})
 
-
 def user_page(req, name):
-
     if 'authin' in req.session and req.session['authin'] == True:
         user = userInfo.objects.get(username=name)
         return render(req, 'user.html',{'user':user, 'auth': req.session['authin'], 'username': req.session['username']})
@@ -88,14 +139,3 @@ def log_out(req):
     del req.session['authin']
     del req.session['username']
     return redirect('home')        
-
-
-# def download_file(req):
-#     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-#     filename = 'Space-invader.zip'
-#     filepath = BASE_DIR + '\\userPage\\static\\' + filename
-#     path = open(filepath, 'rb')
-#     mime_type, _ = mimetypes.guess_type(filepath)
-#     response = HttpResponse(path, content_type=mime_type)
-#     response['Content-Disposition'] = "attachment; filename=%s" % filename
-#     return response

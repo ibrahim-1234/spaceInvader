@@ -3,15 +3,15 @@
 {% block content %}
 
     <h1>user page</h1>
-    email:  {{user.email}}
+    <div class="userinfo">email:  <span>{{user.email}}</span></div> 
     <br>
-    username:   {{user.username}}
+    <div class="userinfo">username:   <span>{{user.username}}</span></div> 
     <br>
-    wins:   {{user.win}}
+    <div class="userinfo">wins:   <span>{{user.win}}</span></div> 
     <br>
-    losses: {{user.loss}}
+    <div class="userinfo">losses: <span>{{user.loss}}</span></div> 
     <br>
-    total score:    {{user.total_score}}
+    <div class="userinfo">total score:    <span>{{user.total_score}}</span></div> 
 
 {% endblock %}    
 
