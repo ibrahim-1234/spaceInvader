@@ -132,7 +132,7 @@ table, th, td {
   }
 
 .userinfo span{
-    color: var(--shadows);
+    color: rgb(0, 255, 98);
 }
 
 @media (max-width: 500px) {
