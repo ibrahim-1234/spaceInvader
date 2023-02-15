@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>reset password</h1>
-    <form method="POST" class=".form-info">
+    <form method="POST" class="form-info">
         {% csrf_token %}
         {{ send_reset_form }}
         <button type="submit" class="submit-form">Send</button>
