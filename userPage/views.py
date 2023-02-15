@@ -1,4 +1,3 @@
-from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from .models import userInfo, profile
 from .forms import loginForm, registerForm, send_reset_Form, change_pass_Form
