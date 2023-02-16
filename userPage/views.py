@@ -4,6 +4,7 @@ from .forms import loginForm, registerForm, send_reset_Form, change_pass_Form
 from django.core.cache import cache
 import uuid
 from django.core.mail import send_mail
+import re
 
 
 def home_page(req):
@@ -87,21 +88,25 @@ def register_page(req):
         form = registerForm()
 
     if req.method == 'POST':
+        reg = r'(.+@hotmail\..{2,}|.+@yahoo\..{2,}|.+@gmail\..{2,}|.+@outlook\..{2,}|.+@student.ksu.edu.sa|.+@ksu.edu.sa|.+@KSU.EDU.SA)'
         form = registerForm(req.POST)
         if form.is_valid():
-            if form.cleaned_data['password'] == form .cleaned_data['password_confirm']:
-                token = uuid.uuid4().hex
-                profile.objects.create(token=token, username=form.cleaned_data['username'], email=form.cleaned_data['email'], password=form.cleaned_data['password'])
-                
+            if bool(re.match(reg, form.cleaned_data['email'])):
+                if form.cleaned_data['password'] == form .cleaned_data['password_confirm']:
+                    token = uuid.uuid4().hex
+                    profile.objects.create(token=token, username=form.cleaned_data['username'], email=form.cleaned_data['email'], password=form.cleaned_data['password'])
+                    
 
-                sub = 'smart space invaders verification'
-                mess = f'click the link to verify your email https://www.smartspaceinvaders.com/verify?token={token}'
-                to = [form.cleaned_data['email']]
-                send_mail(sub, mess, 'brhoome74@gmail.com', to)
+                    sub = 'smart space invaders verification'
+                    mess = f'click the link to verify your email https://www.smartspaceinvaders.com/verify?token={token}'
+                    to = [form.cleaned_data['email']]
+                    send_mail(sub, mess, 'brhoome74@gmail.com', to)
 
-                return render(req, 'success.html', {'verify':True})
+                    return render(req, 'success.html', {'verify':True})
+                else:
+                    return render(req, 'register.html', {'register_form':form, 'auth': req.session['authin'], 'username':req.session['username'], 'error':'password and confirmed password not equal'})  
             else:
-                return render(req, 'register.html', {'register_form':form, 'auth': req.session['authin'], 'username':req.session['username'], 'error':'password and confirmed password not equal'})    
+                return render(req, 'register.html', {'register_form':form, 'auth': req.session['authin'], 'username':req.session['username'], 'error':'email is not allowed please enter valid email'})    
         else:       
             return render(req, 'register.html', {'register_form':form, 'auth': req.session['authin'], 'username':req.session['username']})    
         
