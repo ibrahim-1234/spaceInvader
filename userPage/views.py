@@ -5,6 +5,7 @@ from django.core.cache import cache
 import uuid
 from django.core.mail import send_mail
 import re
+from hashlib import pbkdf2_hmac
 
 
 def home_page(req):
@@ -64,7 +65,10 @@ def reset_pass(req):
             form = change_pass_Form(req.POST)
             if form.is_valid() and form.cleaned_data['password1'] == form.cleaned_data['password2']:
                 user = userInfo.objects.get(email=req.session['email'])
-                user.password = form.cleaned_data['password1']
+                
+                password = user.email + form.cleaned_data['password1']
+                secret = pbkdf2_hmac('sha256', password.encode(), salt='mnbvcxz'.encode(), iterations=180000).hex()
+                user.password = secret
                 user.save()
                 del req.session['token']
                 del req.session['email']
@@ -93,8 +97,11 @@ def register_page(req):
         if form.is_valid():
             if bool(re.match(reg, form.cleaned_data['email'])):
                 if form.cleaned_data['password'] == form .cleaned_data['password_confirm']:
+
                     token = uuid.uuid4().hex
-                    profile.objects.create(token=token, username=form.cleaned_data['username'], email=form.cleaned_data['email'], password=form.cleaned_data['password'])
+                    password = form.cleaned_data['email'] + form.cleaned_data['password']
+                    secret = pbkdf2_hmac('sha256', password.encode(), salt='mnbvcxz'.encode(), iterations=180000).hex()
+                    profile.objects.create(token=token, username=form.cleaned_data['username'], email=form.cleaned_data['email'], password=secret)
                     
 
                     sub = 'smart space invaders verification'
@@ -126,7 +133,9 @@ def login_page(req):
         form = loginForm(req.POST)
         if form.is_valid():
             try:
-                user = userInfo.objects.get(email=form.cleaned_data['email'], password=form.cleaned_data['password']) 
+                password = form.cleaned_data['email'] + form.cleaned_data['password']
+                secret = pbkdf2_hmac('sha256', password.encode(), salt='mnbvcxz'.encode(), iterations=180000).hex()
+                user = userInfo.objects.get(email=form.cleaned_data['email'], password=secret) 
                 req.session['authin'] = True
                 req.session['username'] = user.username
                 return redirect('users', name=user.username)
