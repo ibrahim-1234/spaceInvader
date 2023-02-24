@@ -151,5 +151,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'brhoome74@gmail.com' 
-EMAIL_HOST_PASSWORD = 'zpwcgicfskvipbrc'
+EMAIL_HOST_PASSWORD = 'epcjkvinxeozogcc'
 
