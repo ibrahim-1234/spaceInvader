@@ -20,7 +20,7 @@ def home_page(req):
     return render(req, 'home.html', {'data':data, 'auth': req.session['authin'], 'username':req.session['username']})
 
 def order_list(req, order='-total_score'):
-    data = userInfo.objects.all().order_by(order) 
+    data = userInfo.objects.all().order_by(order, 'username') 
     cache.set('data', data)
     return redirect('/')         
 
