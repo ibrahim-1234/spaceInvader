@@ -84,19 +84,26 @@ WSGI_APPLICATION = 'spaceInvader.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#         'default': {  
+#         'ENGINE': 'django.db.backends.mysql',  
+#         'NAME': 'vxwg6ka0rgw2unbl',  
+#         'USER': 'wewxbxmpaji1y1pf',  
+#         'PASSWORD': 'm9zv48chodplt3ec',  
+#         'HOST': 'q57yawiwmnaw13d2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',  
+#         'PORT': '3306',  
+#         'OPTIONS': {  
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
+#         }  
+#     } 
+#     }
+
 DATABASES = {
-        'default': {  
-        'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'vxwg6ka0rgw2unbl',  
-        'USER': 'wewxbxmpaji1y1pf',  
-        'PASSWORD': 'm9zv48chodplt3ec',  
-        'HOST': 'q57yawiwmnaw13d2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',  
-        'PORT': '3306',  
-        'OPTIONS': {  
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
-        }  
-    } 
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+}
 
 
 
