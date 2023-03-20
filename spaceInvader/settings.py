@@ -27,10 +27,10 @@ SECRET_KEY = 'django-insecure-%zpmqrq=coo1(k6z*xj3%@!sk=9(xhye&3efw*v0+dmk2gbvc9
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.100.122',
     '127.0.0.1',
-    'www.smartspaceinvaders.com',
-    'smartspaceinvaders.com',
+    'localhost',
+#     'www.smartspaceinvaders.com',
+#     'smartspaceinvaders.com',
 ]
 
 
@@ -145,11 +145,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-# EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'brhoome74@gmail.com' 
-EMAIL_HOST_PASSWORD = 'epcjkvinxeozogcc'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# # EMAIL_USE_SSL = True
+# EMAIL_HOST_USER = 'email@email.com' 
+# EMAIL_HOST_PASSWORD = 'epcjkvinxeozogcc'
 
