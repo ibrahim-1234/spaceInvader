@@ -46,7 +46,7 @@ def send_reset_pass(req):
                 sub = 'smart space invaders reset password'
                 mess = f'click the link to reset your password https://www.smartspaceinvaders.com/reset/password?token={token}'
                 to = [form.cleaned_data['email']]
-                send_mail(sub, mess, 'brhoome74@gmail.com', to)
+                send_mail(sub, mess, 'email@email.com', to)
                 req.session['token'] = token
                 req.session['email'] = form.cleaned_data['email']
                 return render(req, 'success.html', {'password_reset':True})
@@ -107,7 +107,7 @@ def register_page(req):
                     sub = 'smart space invaders verification'
                     mess = f'click the link to verify your email https://www.smartspaceinvaders.com/verify?token={token}'
                     to = [form.cleaned_data['email']]
-                    send_mail(sub, mess, 'brhoome74@gmail.com', to)
+                    send_mail(sub, mess, 'email@email.com', to)
 
                     return render(req, 'success.html', {'verify':True})
                 else:

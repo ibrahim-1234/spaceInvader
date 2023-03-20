@@ -29,8 +29,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-#     'www.smartspaceinvaders.com',
-#     'smartspaceinvaders.com',
+    'www.smartspaceinvaders.com',
+    'smartspaceinvaders.com',
 ]
 
 
